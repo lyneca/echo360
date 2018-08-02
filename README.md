@@ -8,15 +8,18 @@ This script allows you to download the videos for offline use.
 
 ## Requirements
 
-`requirements.txt` contains the Python packages this script needs to run.
+### Python Requirements
+
+You need Python 3 to run this script.
+`requirements.txt` contains the Python packages that are needed.
 
 You can run 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 to install them automatically.  
 
----
+### FFmpeg
 
 This program will not work without [FFmpeg](https://ffmpeg.org) installed
 and available on your path. If you're not sure how to do this on Windows,
