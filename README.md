@@ -9,7 +9,14 @@ This script allows you to download the videos for offline use.
 ## Requirements
 
 `requirements.txt` contains the Python packages this script needs to run.
-You can run `pip install -r requirements.txt` to install them automatically.
+
+You can run 
+```bash
+pip install -r requirements.txt
+```
+to install them automatically.  
+
+---
 
 This program will not work without [FFmpeg](https://ffmpeg.org) installed
 and available on your path. If you're not sure how to do this on Windows,
@@ -42,3 +49,5 @@ found is as follows:
    video file).
 
 If you have any issues, feel free to [submit an issue on Github](https://github.com/lyneca/echo360/issues/new).
+
+If you find another way to get the delivery URL that is easier than this one, _*PLEASE MAKE AN ISSUE!*_ I'd love to know!
