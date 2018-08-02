@@ -13,7 +13,7 @@ You can run `pip install -r requirements.txt` to install them automatically.
 
 This program will not work without [FFmpeg](https://ffmpeg.org) installed
 and available on your path. If you're not sure how to do this on Windows,
-there are instructions available [here](https://adaptivesamples.com/how-to-install-ffmpeg-on-windows).
+there are instructions available [here](http://adaptivesamples.com/how-to-install-ffmpeg-on-windows).
 
 On OSX, `brew install ffmpeg` will work fine, and on Linux, use your package manager of choice.
 
