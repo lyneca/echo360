@@ -3,20 +3,36 @@ import sys
 import requests
 import tempfile
 import progressbar
+import argparse
 
-print("Instructions:")
-print("  Step 1: Get the link")
-print("    - Get a plugin that lets you emulate a mobile device")
-print("      Chrome: Use the Chrome DevTools Device Mode")
-print("      Firefox: The Mobile View Switcher plugin works")
-print("    - Open the Echo360 link, and press F12. Find the link to the video playlist.")
-print("      It will end with '.m3u8'.")
-print("    - If you need more instructions, look at the readme: https://github.com/lyneca/echo360")
-print("  Step 2: Enter the URL you copied here: ")
-url = input("> ")
-print("What is the output file name?")
-name = input("> ")
-print()
+instructions = """Instructions:
+  Step 1: Get the link
+    - Get a plugin that lets you emulate a mobile device
+      Chrome: Use the Chrome DevTools Device Mode
+      Firefox: The Mobile View Switcher plugin works
+    - Open the Echo360 link, and press F12. Find the link to the video playlist.
+      It will end with '.m3u8'.
+    - If you need more instructions, look at the readme:
+      https://github.com/lyneca/echo360"""
+
+parser = argparse.ArgumentParser(description=instructions)
+parser.add_argument("-link", "-l", type=str)
+parser.add_argument("-output", "-o", type=str)
+
+args = parser.parse_args()
+
+if not args.link:
+    print(instructions)
+    print("  Step 2: Enter the URL you copied here: ")
+    url = input("> ")
+else:
+    url = args.link
+
+if not args.output:
+    print("  Step 3: What is the output file name?")
+    name = input("> ")
+else:
+    name = args.output
 
 vid_id = url.split('/')[-1].split('?')[0]
 

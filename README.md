@@ -29,22 +29,30 @@ On OSX, `brew install ffmpeg` will work fine, and on Linux, use your package man
 
 ## Usage
 
+**NOTE:** On the [auto_url](https://github.com/lyneca/echo360/tree/auto_url) branch, there is a test for
+a much easier way to get the m3u8 URL. Download that version, and you may be able to just paste the
+first `view.streaming.[base server]/.../echo/presentation/[some_id]` URL in, and it might find the right
+one automatically.
+
 The hardest part is getting the _playlist URL_. So far, the easiest way I've
 found is as follows:
 
-1. Navigate to the player. It should have a URL that looks like `/echo/presentation/[some ID]`.
+1. **Navigate to the player**. It should have a URL that looks like `/echo/presentation/[some ID]`.
    It's the fullscreen player, with the Apps tab on the right (containing Scenes, Bookmarks, etc.),
    and the video on the right of the screen.
-2. Open the Developer Tools. In Chrome, this can be done using F12 on Windows, or Cmd+Opt+I on OSX.
-3. Simulate an iPhone, and refresh. For some reason, Echo shows a different view to mobile browsers.
+2. Open the Developer Tools. In Chrome/Firefox, this can be done using F12 on Windows, or Cmd+Opt+I on OSX.
+   Note that if you have Flash enabled, it may capture the F12 key press.
+3. Simulate an iPhone, and **refesh the page**. For some reason, Echo shows a different view to mobile browsers.
    I know that simulating an iPhone X display in particular works. This can be done by
    Ctrl+Shift+M on Windows, or Cmd+Shift+M on OSX.
+   ![iPhone View](iphone.png)
 4. Find the delivery URL. Navigate to the Elements tab. If you've done everything right so far,
    you should be able to go through these elements of the HTML tree:
    ```
    html > body > div#container > div#content > div#content-player > video#video1
    ```
-5. Copy the delivery url (the `src="[url]"`) part of the `video#video1` element. This URL ends in `.m3u8`;
+   ![HTML path](html_screenshot.png)
+5. **Copy the delivery url** (the `src="[url]"`) part of the `video#video1` element. This URL ends in `.m3u8`;
    which is a playlist file.
 6. Run `python3 download.py`, and paste the delivery URL into the terminal.
 7. Enter the output name. This needs to end in a file extenstion that FFMPEG supports - if you don't have a
