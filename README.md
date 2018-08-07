@@ -32,7 +32,7 @@ On OSX, `brew install ffmpeg` will work fine, and on Linux, use your package man
 **NOTE:** On the [auto_url](https://github.com/lyneca/echo360/tree/auto_url) branch, there is a test for
 a much easier way to get the m3u8 URL. Download that version, and you may be able to just paste the
 first `view.streaming.[base server]/.../echo/presentation/[some_id]` URL in, and it might find the right
-one automatically.
+one automatically. However, the master branch is by far the most stable.
 
 The hardest part is getting the _playlist URL_. So far, the easiest way I've
 found is as follows:
