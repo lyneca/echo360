@@ -45,6 +45,7 @@ found is as follows:
 3. Simulate an iPhone, and **refesh the page**. For some reason, Echo shows a different view to mobile browsers.
    I know that simulating an iPhone X display in particular works. This can be done by
    Ctrl+Shift+M on Windows, or Cmd+Shift+M on OSX.
+
    ![iPhone View](iphone.png)
 4. Find the delivery URL. Navigate to the Elements tab. If you've done everything right so far,
    you should be able to go through these elements of the HTML tree:
