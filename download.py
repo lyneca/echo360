@@ -1,4 +1,5 @@
 import ffmpeg
+import sys
 import requests
 import tempfile
 import progressbar
@@ -17,10 +18,24 @@ print("What is the output file name?")
 name = input("> ")
 print()
 
-base_url = url[:-13]
+vid_id = url.split('/')[-1].split('?')[0]
 
-print("Getting url to chunk list...")
-chunk_file = list(requests.get(url).iter_lines())[-1].decode()
+url = "http://delivery.streaming.sydney.edu.au:1935/echo/_definst_/1831/{{}}/{}/mp4:audio-vga-streamable.m4v/playlist.m3u8".format(vid_id)
+base_url = ''
+
+for i in range(13):
+    temp_url = url.format(i)
+    base_url = temp_url[:-13]
+
+    print("Getting url to chunk list... (trying option #{})".format(i))
+    try:
+        chunk_file = list(requests.get(temp_url).iter_lines())[-1].decode()
+    except IndexError:
+        continue
+    break
+else:
+    print("Couldn't figure out URL :(")
+    sys.exit(0)
 
 print("Getting chunk list...")
 chunk_list = requests.get(base_url + chunk_file)
