@@ -51,7 +51,7 @@ found is as follows:
    ```
    html > body > div#container > div#content > div#content-player > video#video1
    ```
-   ![HTML path](html_screenshot.png)
+   ![HTML path](html.png)
 5. **Copy the delivery url** (the `src="[url]"`) part of the `video#video1` element. This URL ends in `.m3u8`;
    which is a playlist file.
 6. Run `python3 download.py`, and paste the delivery URL into the terminal.
