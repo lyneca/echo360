@@ -6,7 +6,7 @@ by using ~dark rituals~ Flash and other deprecated technologies.
 
 This script allows you to download the videos for offline use.
 
-*NOTE*: Under the MIT license, I do not endorse nor take liability for the downloading of copyrighted content.
+**NOTE**: Under the MIT license, I do not endorse nor take liability for the downloading of copyrighted content.
 This is intended as a proof of concept; use this software at your own risk.
 
 ## Requirements
