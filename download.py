@@ -1,7 +1,9 @@
-import ffmpeg
+import ffmpy
+import os
 import requests
 import tempfile
-import progressbar
+import multiprocessing as mp
+from tqdm import tqdm
 import argparse
 
 instructions = """Instructions:
@@ -43,23 +45,19 @@ chunk_list = requests.get(base_url + chunk_file)
 
 out_file_string = b""
 
-bar = progressbar.ProgressBar()
-
 chunk_list = [x for x in chunk_list.iter_lines() if not x.decode().startswith('#')]
 
+tmp_file = tempfile.mktemp()
 print("Downloading chunks...")
-for line in bar(chunk_list):
+for i, line in enumerate(tqdm(chunk_list)):
     line = line.decode()
     if not line.startswith('#'):
         chunk = requests.get(base_url + line).content
-        out_file_string += chunk
-
-tmp_file = tempfile.mktemp()
-print("Writing to file...")
-with open(tmp_file, 'xb') as out:
-    out.write(out_file_string)
+        with open(tmp_file, 'ab') as out:
+            out.write(chunk)
 
 print("Converting to .mp4 with ffmpeg...")
+
 
 ffmpeg.input(tmp_file).output(name, acodec='copy', vcodec='copy').run()
 
