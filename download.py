@@ -30,6 +30,7 @@ if not args.output:
 else:
     name = args.output
 
+url = 'http://delivery.streaming.sydney.edu.au:1935/echo/_definst_/{}/mp4:audio-vga-streamable.m4v/playlist.m3u8'
 base_url = url[:-13]
 
 print("Getting url to chunk list...")
