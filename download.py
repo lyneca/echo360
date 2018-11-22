@@ -1,20 +1,15 @@
-import ffmpy
-import os
-import requests
-import tempfile
-import multiprocessing as mp
-from tqdm import tqdm
-import argparse
+#!/usr/bin/env python
+"""
+Todo: add back module level doc
+"""
 
-instructions = """Instructions:
-  Step 1: Get the link
-    - Get a plugin that lets you emulate a mobile device
-      Chrome: Use the Chrome DevTools Device Mode
-      Firefox: The Mobile View Switcher plugin works
-    - Open the Echo360 link, and press F12. Find the link to the video playlist.
-      It will end with '.m3u8'.
-    - If you need more instructions, look at the readme:
-      https://github.com/lyneca/echo360"""
+import ffmpeg
+import os
+import requests as r
+import tempfile
+import argparse
+import concurrent.futures as cf
+
 
 parser = argparse.ArgumentParser(description=instructions)
 parser.add_argument("-link", "-l", type=str)
@@ -35,30 +30,32 @@ if not args.output:
 else:
     name = args.output
 
+url = 'http://delivery.streaming.sydney.edu.au:1935/echo/_definst_/{}/mp4:audio-vga-streamable.m4v/playlist.m3u8'
 base_url = url[:-13]
 
 print("Getting url to chunk list...")
-chunk_file = list(requests.get(url).iter_lines())[-1].decode()
+chunk_file = list(r.get(url).iter_lines())[-1].decode()
 
 print("Getting chunk list...")
-chunk_list = requests.get(base_url + chunk_file)
+chunk_list = r.get(base_url + chunk_file)
 
 out_file_string = b""
 
 chunk_list = [x for x in chunk_list.iter_lines() if not x.decode().startswith('#')]
 
 tmp_file = tempfile.mktemp()
+
 print("Downloading chunks...")
-for i, line in enumerate(tqdm(chunk_list)):
-    line = line.decode()
-    if not line.startswith('#'):
-        chunk = requests.get(base_url + line).content
+with cf.ThreadPoolExecutor(max_workers=20) as ex:
+    promises = [
+        ex.submit(r.get, base_url + line.decode)
+        for line in chunk_list if not line.decode.startswith('#')
+    ]
+    for p in promises:
         with open(tmp_file, 'ab') as out:
-            out.write(chunk)
+            out.write(p.result().content)
 
 print("Converting to .mp4 with ffmpeg...")
-
-
 ffmpeg.input(tmp_file).output(name, acodec='copy', vcodec='copy').run()
 
 print("Done. Output to {}.".format(name))
